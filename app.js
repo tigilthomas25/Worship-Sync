@@ -1,3 +1,8 @@
+const SUPABASE_URL = "https://gxlnmbhegqtkbuyftzwq.supabase.co";
+const SUPABASE_KEY = "sb_publishable_b64wuzUEniCibtvB6ETaKw_a5GknEMe";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const songs=[
 {id:"amazing-grace",title:"Amazing Grace",key:"G",bpm:72,time:"3/4",style:"Hymn • Gentle",capo:"—",sunday:true,
  blocks:[
