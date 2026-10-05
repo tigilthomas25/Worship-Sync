@@ -1,5 +1,15 @@
-HOLY ROSARY ENGLISH CHOIR - PWA V1
-Open index.html for a local preview.
-For full install/offline PWA behaviour, host this folder on an HTTPS web host.
-Current V1: mobile songbook, search, singer/guitar/piano modes, dynamics, red chords, sample setlist data, offline cache shell.
-Next production step: connect a shared cloud database + admin login so edits sync to every member.
+WorshipSync V2
+Holy Rosary English Choir
+
+V2 features:
+- Mobile-first design and WorshipSync branding
+- Search, Sunday Setlist and favourites
+- Singer, Guitar and Piano modes
+- Red chords
+- Soft / Build / Loud / Solo / group cues
+- Key, tempo, style, time signature and capo display
+- Font controls
+- Chord-shape visual aids
+- Installable PWA manifest and offline cache
+
+Important: V2 is still a local/static songbook. Shared admin editing and automatic cloud sync for all choir members is the next phase.
