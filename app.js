@@ -24,6 +24,20 @@ const songs=[
  {cue:"LOUD",group:"ALL",chords:"F       G       C",text:"Full choir finish"}
 ]}];
 
+async function loadSongsFromSupabase() {
+  const { data, error } = await supabaseClient
+    .from("songs")
+    .select("*");
+
+  if (error) {
+    console.error("Supabase error:", error);
+    return;
+  }
+
+  console.log("Songs from Supabase:", data);
+}
+loadSongsFromSupabase();
+
 let currentTab="songs",current=null,mode="singer",transpose=0,fontSize=20;
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const favs=()=>JSON.parse(localStorage.getItem("ws-favs")||"[]");
