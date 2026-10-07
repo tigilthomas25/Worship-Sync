@@ -3,7 +3,7 @@ const SUPABASE_KEY = "sb_publishable_b64wuzUEniCibtvB6ETaKw_a5GknEMe";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const songs=[
+let songs=[
 {id:"amazing-grace",title:"Amazing Grace",key:"G",bpm:72,time:"3/4",style:"Hymn • Gentle",capo:"—",sunday:true,
  blocks:[
  {cue:"SOFT",group:"WOMEN",chords:"G              C        G",text:"Amazing grace, how sweet the sound"},
@@ -34,7 +34,19 @@ async function loadSongsFromSupabase() {
     return;
   }
 
-  console.log("Songs from Supabase:", data);
+console.log("Songs from Supabase:", data);
+songs = data.map(s => ({
+  ...s,
+  id: String(s.id),
+  key: s.song_key,
+  bpm: s.tempo,
+  time: s.time_signature,
+  style: s.style || s.category,
+  capo: s.capo || "—",
+  sunday: s.is_sunday,
+  blocks: s.blocks || []
+}));
+renderList();
 }
 loadSongsFromSupabase();
 
