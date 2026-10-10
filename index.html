@@ -69,10 +69,48 @@
       <div id="lyrics" class="lyrics"></div>
     </article>
   </section>
+
 <section id="adminView" class="hidden">
-  <h2>Admin – Add Song</h2>
+  <h2>Admin - Add Song</h2>
   <p>Add and manage choir songs here.</p>
+
+  <form id="addSongForm">
+    <label for="newTitle">Song Title</label>
+    <input id="newTitle" type="text"
+           placeholder="Amazing Grace" required>
+
+    <label for="newArtist">Artist / Composer</label>
+    <input id="newArtist" type="text"
+           placeholder="John Newton">
+
+    <label for="newKey">Song Key</label>
+    <input id="newKey" type="text"
+           placeholder="G">
+
+    <label for="newTempo">Tempo (BPM)</label>
+    <input id="newTempo" type="number"
+           placeholder="72">
+
+    <label for="newTime">Time Signature</label>
+    <input id="newTime" type="text"
+           placeholder="4/4">
+
+    <label for="newStyle">Style / Category</label>
+    <input id="newStyle" type="text"
+           placeholder="Worship, Gentle">
+
+    <label for="newCapo">Capo</label>
+    <input id="newCapo" type="text"
+           placeholder="-">
+
+    <label for="newLyrics">Lyrics and Chords</label>
+    <textarea id="newLyrics" rows="8"
+      placeholder="Enter lyrics and chords here"></textarea>
+
+    <button type="submit">Save Song</button>
+  </form>
 </section>
+
 </main>
 
 <footer>WorshipSync • Holy Rosary English Choir <span id="offlineState">• Online</span></footer>
