@@ -151,64 +151,20 @@ if (addSongForm) {
 
 const adminButton = document.querySelector('[data-tab="admin"]');
 
+
 if (adminButton) {
-  adminButton.addEventListener("click", () => {
+  adminButton.addEventListener("click", async () => {
+    const { data: { user } } =
+      await supabaseClient.auth.getUser();
+
+    if (!user) {
+      alert("Please sign in to add songs.");
+      return;
+    }
+
     document.querySelector("#homeView").classList.add("hidden");
     document.querySelector("#songView").classList.add("hidden");
     document.querySelector("#adminView").classList.remove("hidden");
   });
 }
-
-const loginBtn = document.querySelector("#loginBtn");
-
-if (loginBtn) {
-  loginBtn.addEventListener("click", async () => {
-    const email = prompt("Enter your choir member email address:");
-
-    if (!email || !email.trim()) return;
-
-    const { error } = await supabaseClient.auth.signInWithOtp({
-      email: email.trim(),
-      options: {
-        shouldCreateUser: false,
-        emailRedirectTo: window.location.origin + window.location.pathname
-      }
-    });
-
-    if (error) {
-      alert("Sign in failed: " + error.message);
-    } else {
-      alert("If your email is registered, check your inbox for a sign-in link.");
-    }
-  });
-}
-
-const logoutBtn = document.querySelector("#logoutBtn");
-
-async function updateLoginButtons() {
-  const { data: { session } } =
-    await supabaseClient.auth.getSession();
-
-  loginBtn.classList.toggle("hidden", !!session);
-  logoutBtn.classList.toggle("hidden", !session);
-}
-
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", async () => {
-    const { error } = await supabaseClient.auth.signOut();
-
-    if (error) {
-      alert("Sign out failed: " + error.message);
-      return;
-    }
-
-    await updateLoginButtons();
-    alert("You have signed out.");
-  });
-}
-
-supabaseClient.auth.onAuthStateChange(() => {
-  updateLoginButtons();
-});
-
-updateLoginButtons();
+  
