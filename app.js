@@ -96,3 +96,55 @@ $("#plus").onclick=()=>{$("#transposeVal").textContent=++transpose};$("#minus").
 $("#larger").onclick=()=>{fontSize=Math.min(30,fontSize+2);renderSong()};$("#smaller").onclick=()=>{fontSize=Math.max(16,fontSize-2);renderSong()};
 function online(){ $("#offlineState").textContent=navigator.onLine?"• Online":"• Offline mode" } addEventListener("online",online);addEventListener("offline",online);online();renderList();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js");
+
+const addSongForm = document.querySelector("#addSongForm");
+
+if (addSongForm) {
+  addSongForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const title = document.querySelector("#newTitle").value.trim();
+    const artist = document.querySelector("#newArtist").value.trim();
+    const songKey = document.querySelector("#newKey").value.trim();
+    const tempo = Number(document.querySelector("#newTempo").value);
+    const timeSignature = document.querySelector("#newTime").value.trim();
+    const style = document.querySelector("#newStyle").value.trim();
+    const capo = document.querySelector("#newCapo").value.trim();
+    const lyrics = document.querySelector("#newLyrics").value.trim();
+
+    if (!title) {
+      alert("Please enter a song title.");
+      return;
+    }
+
+    if (!lyrics) {
+      alert("Please enter lyrics and chords.");
+      return;
+    }
+
+    const { error } = await supabaseClient.from("songs").insert({
+      title: title,
+      artist: artist,
+      song_key: songKey,
+      tempo: tempo || null,
+      time_signature: timeSignature,
+      style: style,
+      capo: capo,
+      blocks: [{
+        cue: "SOFT",
+        group: "ALL",
+        chords: "",
+        text: lyrics
+      }]
+    });
+
+    if (error) {
+      alert("Unable to save song: " + error.message);
+      return;
+    }
+
+    alert("Song saved successfully!");
+    addSongForm.reset();
+    await loadSongsFromSupabase();
+  });
+}
