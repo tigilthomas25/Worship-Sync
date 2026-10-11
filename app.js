@@ -182,3 +182,33 @@ if (loginBtn) {
     }
   });
 }
+
+const logoutBtn = document.querySelector("#logoutBtn");
+
+async function updateLoginButtons() {
+  const { data: { session } } =
+    await supabaseClient.auth.getSession();
+
+  loginBtn.classList.toggle("hidden", !!session);
+  logoutBtn.classList.toggle("hidden", !session);
+}
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+      alert("Sign out failed: " + error.message);
+      return;
+    }
+
+    await updateLoginButtons();
+    alert("You have signed out.");
+  });
+}
+
+supabaseClient.auth.onAuthStateChange(() => {
+  updateLoginButtons();
+});
+
+updateLoginButtons();
