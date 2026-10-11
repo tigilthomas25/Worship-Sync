@@ -158,3 +158,27 @@ if (adminButton) {
     document.querySelector("#adminView").classList.remove("hidden");
   });
 }
+
+const loginBtn = document.querySelector("#loginBtn");
+
+if (loginBtn) {
+  loginBtn.addEventListener("click", async () => {
+    const email = prompt("Enter your choir member email address:");
+
+    if (!email || !email.trim()) return;
+
+    const { error } = await supabaseClient.auth.signInWithOtp({
+      email: email.trim(),
+      options: {
+        shouldCreateUser: false,
+        emailRedirectTo: window.location.origin + window.location.pathname
+      }
+    });
+
+    if (error) {
+      alert("Sign in failed: " + error.message);
+    } else {
+      alert("If your email is registered, check your inbox for a sign-in link.");
+    }
+  });
+}
