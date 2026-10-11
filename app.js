@@ -148,3 +148,13 @@ if (addSongForm) {
     await loadSongsFromSupabase();
   });
 }
+
+const adminButton = document.querySelector('[data-tab="admin"]');
+
+if (adminButton) {
+  adminButton.addEventListener("click", () => {
+    document.querySelector("#homeView").classList.add("hidden");
+    document.querySelector("#songView").classList.add("hidden");
+    document.querySelector("#adminView").classList.remove("hidden");
+  });
+}
